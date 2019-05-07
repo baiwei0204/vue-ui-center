@@ -6,10 +6,10 @@
             <div class="grid-content">
                 <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
                     <el-submenu index="1">
-                        <template slot="title">Language</template>
-                        <el-menu-item index="en-US">en-US</el-menu-item>
-                        <el-menu-item index="zh-CN">zh-CN</el-menu-item>
-                        <el-menu-item index="zh-HK">zh-HK</el-menu-item>
+                        <template slot="title">{{$t('languae_switch')}}</template>
+                        <el-menu-item index="en_US">{{$t('en_US')}}</el-menu-item>
+                        <el-menu-item index="zh_CN">{{$t('zh_CN')}}</el-menu-item>
+                        <el-menu-item index="zh_HK">{{$t('zh_HK')}}</el-menu-item>
                     </el-submenu>
                     <el-submenu index="2">
                         <template slot="title">Theme</template>
@@ -27,6 +27,7 @@
 
 <script>
 import {mapMutations} from 'vuex'
+import {loadLanugageAsync} from '@/i18n'
 export default {
     name: 'FixedBar',
     data : () => {
@@ -41,10 +42,11 @@ export default {
         // 使用es5 方法, 为了获取局部 this
         handleSelect (key, path) {
             console.log('key, path is %s, %s', key, path );
+            debugger
             this.$store.commit('CHANGE_LANGUAGE', key);
-            debugger;
             // mapMutations 将 `this.CHANGE_LANGUAGE()` 映射为 `this.$store.commit('CHANGE_LANGUAGE')`
-            this.CHANGE_LANGUAGE(key) 
+            this.CHANGE_LANGUAGE(key); // set store
+            loadLanugageAsync(key) 
         }
     }
 }
